@@ -1,0 +1,46 @@
+.btn {
+  @include button-base;
+  
+  // Variants
+  &.btn-primary {
+    @include button-primary;
+  }
+  
+  &.btn-secondary {
+    @include button-secondary;
+  }
+  
+  &.btn-danger {
+    background-color: $danger-color;
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background-color: darken($danger-color, 10%);
+    }
+  }
+  
+  &.btn-success {
+    background-color: $success-color;
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background-color: darken($success-color, 10%);
+    }
+  }
+  
+  // Sizes
+  &.btn-small {
+    padding: $spacing-xs $spacing-sm;
+    font-size: 0.875rem;
+  }
+  
+  &.btn-medium {
+    padding: $spacing-sm $spacing-md;
+    font-size: 1rem;
+  }
+  
+  &.btn-large {
+    padding: $spacing-md $spacing-lg;
+    font-size: 1.125rem;
+  }
+}

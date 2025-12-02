@@ -1,0 +1,13 @@
+.app-layout {
+  min-height: 100vh;
+  @include flex-column;
+}
+
+.main-content {
+  flex: 1;
+  padding: $spacing-xl 0;
+
+  @include mobile {
+    padding: $spacing-lg 0;
+  }
+}

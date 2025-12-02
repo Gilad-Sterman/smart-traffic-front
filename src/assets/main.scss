@@ -1,0 +1,20 @@
+// Base styles
+@import "./base/vars.scss";
+@import "./base/mixinis.scss";
+@import "./base/base.scss";
+
+// Component styles
+@import "./cmps/Header.scss";
+@import "./cmps/Layout.scss";
+@import "./cmps/common/Button.scss";
+@import "./cmps/common/LoadingSpinner.scss";
+@import "./cmps/common/StepProgress.scss";
+
+// Page styles
+@import "./pages/Home.scss";
+@import "./pages/Dashboard.scss";
+@import "./pages/Upload.scss";
+@import "./pages/OCREdit.scss";
+@import "./pages/AIAnalysis.scss";
+@import "./pages/Results.scss";
+@import "./pages/PDFExport.scss";

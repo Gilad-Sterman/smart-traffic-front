@@ -1,0 +1,195 @@
+.step-progress {
+  @include card;
+  margin-bottom: $spacing-lg;
+  direction: rtl;
+  
+  .step-progress-header {
+    @include flex-between;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid rgba($text-light, 0.2);
+    
+    h3 {
+      color: $primary-color;
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    
+    .step-counter {
+      background-color: rgba($primary-color, 0.1);
+      color: $primary-color;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $radius-md;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+  }
+  
+  .steps-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-lg;
+    
+    @include mobile {
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+  }
+  
+  .step-wrapper {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    
+    @include mobile {
+      width: 100%;
+      
+      .step-connector {
+        display: none;
+      }
+    }
+  }
+  
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm;
+    border-radius: $radius-md;
+    transition: all $transition-fast;
+    min-width: 140px;
+    
+    @include mobile {
+      width: 100%;
+      padding: $spacing-md;
+    }
+    
+    &.completed {
+      background-color: rgba($success-color, 0.1);
+      
+      .step-icon {
+        background-color: $success-color;
+        color: white;
+      }
+      
+      .step-title {
+        color: $success-color;
+        font-weight: 600;
+      }
+      
+      .step-status {
+        color: $success-color;
+      }
+    }
+    
+    &.active {
+      background-color: rgba($primary-color, 0.1);
+      border: 2px solid $primary-color;
+      
+      .step-icon {
+        background-color: $primary-color;
+        color: white;
+        animation: pulse 1.5s infinite;
+      }
+      
+      .step-title {
+        color: $primary-color;
+        font-weight: 600;
+      }
+      
+      .step-status {
+        color: $primary-color;
+      }
+    }
+    
+    &.pending {
+      background-color: rgba($text-light, 0.05);
+      
+      .step-icon {
+        background-color: rgba($text-light, 0.2);
+        color: $text-light;
+      }
+      
+      .step-title {
+        color: $text-secondary;
+      }
+      
+      .step-status {
+        color: $text-light;
+      }
+    }
+  }
+  
+  .step-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    @include flex-center;
+    font-size: 0.875rem;
+    font-weight: bold;
+    transition: all $transition-fast;
+    flex-shrink: 0;
+  }
+  
+  .step-info {
+    @include flex-column;
+    gap: 2px;
+    
+    .step-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    
+    .step-status {
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+  }
+  
+  .step-connector {
+    flex: 1;
+    height: 2px;
+    margin: 0 $spacing-sm;
+    position: relative;
+    
+    .connector-line {
+      width: 100%;
+      height: 100%;
+      background-color: rgba($text-light, 0.3);
+      border-radius: 1px;
+      transition: background-color $transition-fast;
+    }
+    
+    &.completed .connector-line {
+      background-color: $success-color;
+    }
+  }
+  
+  .progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: rgba($text-light, 0.2);
+    border-radius: $radius-sm;
+    overflow: hidden;
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, $primary-color, $success-color);
+      border-radius: $radius-sm;
+      transition: width $transition-slow;
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}

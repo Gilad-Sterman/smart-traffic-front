@@ -1,0 +1,202 @@
+.results-step {
+  .step-header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+    
+    h1 {
+      color: $primary-color;
+    }
+  }
+  
+  .main-conclusion {
+    margin-bottom: $spacing-2xl;
+    
+    .conclusion-card {
+      @include card;
+      text-align: center;
+      padding: $spacing-2xl;
+      border: 3px solid;
+      
+      &.success {
+        border-color: $success-color;
+        background-color: rgba($success-color, 0.05);
+        
+        .conclusion-icon {
+          color: $success-color;
+        }
+        
+        h2 {
+          color: $success-color;
+        }
+      }
+      
+      &.warning {
+        border-color: $warning-color;
+        background-color: rgba($warning-color, 0.05);
+        
+        .conclusion-icon {
+          color: $warning-color;
+        }
+        
+        h2 {
+          color: $warning-color;
+        }
+      }
+      
+      &.danger {
+        border-color: $danger-color;
+        background-color: rgba($danger-color, 0.05);
+        
+        .conclusion-icon {
+          color: $danger-color;
+        }
+        
+        h2 {
+          color: $danger-color;
+        }
+      }
+      
+      .conclusion-icon {
+        font-size: 4rem;
+        margin-bottom: $spacing-md;
+      }
+      
+      h2 {
+        margin-bottom: $spacing-sm;
+        font-size: 2rem;
+      }
+      
+      .conclusion-subtitle {
+        font-size: 1.2rem;
+        color: $text-secondary;
+        margin: 0;
+      }
+    }
+  }
+  
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-2xl;
+  }
+  
+  .result-card {
+    @include card;
+    text-align: center;
+    
+    h3 {
+      color: $text-secondary;
+      font-size: 1rem;
+      margin-bottom: $spacing-md;
+      font-weight: 500;
+    }
+    
+    .result-value {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: $spacing-sm;
+      color: $text-primary;
+      
+      &.success {
+        color: $success-color;
+      }
+      
+      &.warning {
+        color: $warning-color;
+      }
+      
+      &.danger {
+        color: $danger-color;
+      }
+    }
+    
+    p {
+      color: $text-light;
+      font-size: 0.875rem;
+      margin: 0;
+    }
+  }
+  
+  .explanation-section {
+    margin-bottom: $spacing-2xl;
+    
+    h3 {
+      color: $primary-color;
+      margin-bottom: $spacing-md;
+    }
+    
+    .explanation-card {
+      @include card;
+      background-color: rgba($primary-color, 0.05);
+      border-right: 4px solid $primary-color;
+      
+      p {
+        margin: 0;
+        line-height: 1.6;
+        color: $text-primary;
+      }
+    }
+  }
+  
+  .actions-section {
+    margin-bottom: $spacing-lg;
+    
+    h3 {
+      color: $primary-color;
+      margin-bottom: $spacing-lg;
+      text-align: center;
+    }
+    
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: $spacing-md;
+    }
+    
+    .action-btn {
+      @include card;
+      @include flex-column;
+      align-items: center;
+      padding: $spacing-lg;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all $transition-fast;
+      text-decoration: none;
+      
+      &.primary {
+        border-color: $primary-color;
+        background-color: rgba($primary-color, 0.05);
+        
+        &:hover {
+          background-color: $primary-color;
+          color: white;
+          
+          .action-icon {
+            transform: scale(1.1);
+          }
+        }
+      }
+      
+      &.secondary {
+        border-color: $text-light;
+        
+        &:hover {
+          border-color: $primary-color;
+          background-color: rgba($primary-color, 0.05);
+        }
+      }
+      
+      .action-icon {
+        font-size: 2rem;
+        margin-bottom: $spacing-sm;
+        transition: transform $transition-fast;
+      }
+      
+      .action-text {
+        font-weight: 600;
+        text-align: center;
+      }
+    }
+  }
+}

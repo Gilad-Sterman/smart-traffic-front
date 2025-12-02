@@ -1,0 +1,92 @@
+// Flexbox mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Button mixins
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm $spacing-md;
+  border: none;
+  border-radius: $radius-md;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition-fast;
+  text-decoration: none;
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  @include button-base;
+  background-color: $primary-color;
+  color: white;
+  
+  &:hover:not(:disabled) {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background-color: transparent;
+  color: $primary-color;
+  border: 1px solid $primary-color;
+  
+  &:hover:not(:disabled) {
+    background-color: $primary-color;
+    color: white;
+  }
+}
+
+// Responsive mixins
+@mixin mobile {
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-md - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$breakpoint-md}) {
+    @content;
+  }
+}
+
+// Card mixin
+@mixin card {
+  background-color: $bg-primary;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  padding: $spacing-lg;
+}
+
+// Text truncation
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,127 @@
+.ocr-edit-step {
+  .step-header {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+    
+    h1 {
+      color: $primary-color;
+    }
+  }
+  
+  .ocr-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-2xl;
+    margin-bottom: $spacing-2xl;
+    
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .document-preview {
+    @include card;
+    
+    h3 {
+      margin-bottom: $spacing-md;
+      color: $text-primary;
+    }
+    
+    .preview-placeholder {
+      height: 400px;
+      background-color: $bg-secondary;
+      border: 1px dashed $text-light;
+      border-radius: $radius-md;
+      @include flex-center;
+      
+      p {
+        color: $text-light;
+        font-style: italic;
+      }
+    }
+  }
+  
+  .fields-editor {
+    @include card;
+    
+    h3 {
+      margin-bottom: $spacing-lg;
+      color: $text-primary;
+    }
+  }
+  
+  .field-group {
+    margin-bottom: $spacing-lg;
+    
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: $spacing-sm;
+      color: $text-primary;
+    }
+    
+    &.required label:after {
+      content: " *";
+      color: $danger-color;
+    }
+    
+    .field-input {
+      width: 100%;
+      padding: $spacing-sm $spacing-md;
+      border: 2px solid $text-light;
+      border-radius: $radius-md;
+      font-size: 1rem;
+      transition: border-color $transition-fast;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+      
+      &.high-confidence {
+        border-color: $success-color;
+        background-color: rgba($success-color, 0.05);
+      }
+      
+      &.medium-confidence {
+        border-color: $warning-color;
+        background-color: rgba($warning-color, 0.05);
+      }
+      
+      &.low-confidence {
+        border-color: $danger-color;
+        background-color: rgba($danger-color, 0.05);
+      }
+    }
+    
+    .confidence-indicator {
+      display: block;
+      font-size: 0.875rem;
+      margin-top: $spacing-xs;
+      font-weight: 500;
+      
+      .high-confidence + & {
+        color: $success-color;
+      }
+      
+      .medium-confidence + & {
+        color: $warning-color;
+      }
+      
+      .low-confidence + & {
+        color: $danger-color;
+      }
+    }
+  }
+  
+  .actions {
+    @include flex-between;
+    padding-top: $spacing-lg;
+    border-top: 1px solid rgba($text-light, 0.2);
+    
+    @include mobile {
+      @include flex-column;
+      gap: $spacing-md;
+    }
+  }
+}

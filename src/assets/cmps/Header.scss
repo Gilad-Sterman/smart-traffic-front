@@ -1,0 +1,88 @@
+.header {
+  background-color: $bg-primary;
+  box-shadow: $shadow-sm;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  direction: rtl;
+
+  .header-content {
+    @include flex-between;
+    padding: $spacing-md 0;
+  }
+
+  .logo {
+    color: $primary-color;
+    font-weight: 700;
+    text-decoration: none;
+
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      direction: ltr;
+    }
+
+    &:hover {
+      color: darken($primary-color, 10%);
+    }
+  }
+
+  .nav {
+    @include flex-center;
+    gap: $spacing-lg;
+
+    @include mobile {
+      gap: $spacing-md;
+    }
+  }
+
+  .nav-link {
+    color: $text-secondary;
+    font-weight: 500;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $radius-md;
+    transition: all $transition-fast;
+    position: relative;
+    @include flex-center;
+    gap: $spacing-xs;
+
+    &:hover {
+      color: $primary-color;
+      background-color: rgba($primary-color, 0.1);
+    }
+
+    &.active {
+      color: $primary-color;
+      background-color: rgba($primary-color, 0.1);
+      font-weight: 600;
+    }
+
+    &.mvp-only {
+      opacity: 0.6;
+      
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .mvp-badge {
+      background-color: $warning-color;
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: $radius-sm;
+      font-weight: 600;
+      margin-right: $spacing-xs;
+    }
+
+    @include mobile {
+      padding: $spacing-xs $spacing-sm;
+      font-size: 0.9rem;
+      
+      .mvp-badge {
+        font-size: 0.6rem;
+        padding: 1px 4px;
+      }
+    }
+  }
+}

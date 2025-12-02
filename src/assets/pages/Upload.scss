@@ -1,0 +1,127 @@
+.upload-step {
+  .step-header {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+
+    h2 {
+      color: $primary-color;
+      margin-bottom: $spacing-sm;
+    }
+
+    p {
+      color: $text-secondary;
+      font-size: 1.1rem;
+    }
+  }
+
+  .upload-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: $spacing-2xl;
+    margin-bottom: $spacing-2xl;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .upload-area {
+    min-height: 300px;
+  }
+
+  .drag-drop-zone {
+    border: 2px dashed $primary-color;
+    border-radius: $radius-lg;
+    padding: $spacing-2xl;
+    text-align: center;
+    background-color: rgba($primary-color, 0.05);
+    transition: all $transition-normal;
+    cursor: pointer;
+
+    &:hover {
+      border-color: darken($primary-color, 10%);
+      background-color: rgba($primary-color, 0.1);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      margin-bottom: $spacing-md;
+    }
+
+    h3 {
+      color: $text-primary;
+      margin-bottom: $spacing-sm;
+    }
+
+    p {
+      color: $text-secondary;
+      margin-bottom: $spacing-lg;
+    }
+  }
+
+  .file-selected {
+    @include card;
+    margin-bottom: $spacing-2xl;
+
+    .file-info {
+      @include flex-between;
+      align-items: center;
+
+      @include mobile {
+        @include flex-column;
+        gap: $spacing-md;
+        text-align: center;
+      }
+    }
+
+    .file-icon {
+      font-size: 2rem;
+      margin-left: $spacing-md;
+    }
+
+    .file-details {
+      flex: 1;
+
+      h4 {
+        color: $text-primary;
+        margin-bottom: $spacing-xs;
+      }
+
+      p {
+        color: $text-secondary;
+        font-size: 0.875rem;
+        margin: 0;
+      }
+    }
+  }
+
+  .upload-info {
+    @include card;
+    height: fit-content;
+
+    h4 {
+      color: $primary-color;
+      margin-bottom: $spacing-md;
+    }
+
+    ul {
+      list-style: none;
+
+      li {
+        padding: $spacing-sm 0;
+        border-bottom: 1px solid rgba($text-light, 0.2);
+
+        &:before {
+          content: "✓";
+          color: $success-color;
+          font-weight: bold;
+          margin-left: $spacing-sm;
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}

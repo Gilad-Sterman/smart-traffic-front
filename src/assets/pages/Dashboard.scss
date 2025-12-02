@@ -1,0 +1,15 @@
+.dashboard-page {
+  .container {
+    max-width: 1400px;
+  }
+  
+  h1 {
+    color: $primary-color;
+    margin-bottom: $spacing-md;
+  }
+  
+  p {
+    color: $text-secondary;
+    margin-bottom: $spacing-xl;
+  }
+}

@@ -1,0 +1,209 @@
+.pdf-export-step {
+  .step-header {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+    
+    h1 {
+      color: $primary-color;
+    }
+  }
+  
+  .pdf-preview {
+    @include card;
+    margin-bottom: $spacing-2xl;
+    
+    .preview-header {
+      @include flex-between;
+      margin-bottom: $spacing-lg;
+      padding-bottom: $spacing-md;
+      border-bottom: 1px solid rgba($text-light, 0.2);
+      
+      h3 {
+        color: $text-primary;
+        margin: 0;
+      }
+      
+      .pdf-status {
+        background-color: rgba($success-color, 0.1);
+        color: $success-color;
+        padding: $spacing-xs $spacing-sm;
+        border-radius: $radius-sm;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+    }
+    
+    .pdf-content-preview {
+      background-color: $bg-secondary;
+      border-radius: $radius-md;
+      padding: $spacing-md;
+      
+      .pdf-page {
+        background-color: white;
+        padding: $spacing-lg;
+        border-radius: $radius-sm;
+        box-shadow: $shadow-md;
+        max-height: 500px;
+        overflow-y: auto;
+        
+        .pdf-header {
+          text-align: center;
+          margin-bottom: $spacing-lg;
+          padding-bottom: $spacing-md;
+          border-bottom: 2px solid $primary-color;
+          
+          h4 {
+            color: $primary-color;
+            margin-bottom: $spacing-xs;
+          }
+          
+          p {
+            color: $text-secondary;
+            margin: 0;
+            font-size: 0.875rem;
+          }
+        }
+        
+        .pdf-section {
+          margin-bottom: $spacing-lg;
+          
+          h5 {
+            color: $text-primary;
+            margin-bottom: $spacing-sm;
+            font-size: 1rem;
+            border-bottom: 1px solid rgba($text-light, 0.3);
+            padding-bottom: $spacing-xs;
+          }
+          
+          ul {
+            list-style: none;
+            margin: 0;
+            
+            li {
+              padding: $spacing-xs 0;
+              color: $text-secondary;
+              font-size: 0.875rem;
+              
+              &:before {
+                content: "•";
+                color: $primary-color;
+                margin-left: $spacing-sm;
+              }
+            }
+          }
+          
+          p {
+            color: $text-secondary;
+            font-size: 0.875rem;
+            line-height: 1.5;
+          }
+        }
+        
+        .pdf-footer {
+          margin-top: $spacing-lg;
+          padding-top: $spacing-md;
+          border-top: 1px solid rgba($text-light, 0.3);
+          
+          .disclaimer {
+            font-size: 0.75rem;
+            color: $text-light;
+            font-style: italic;
+            text-align: center;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+  
+  .download-section {
+    @include card;
+    margin-bottom: $spacing-2xl;
+    
+    .download-info {
+      text-align: center;
+      margin-bottom: $spacing-lg;
+      
+      h3 {
+        color: $primary-color;
+        margin-bottom: $spacing-sm;
+      }
+      
+      p {
+        color: $text-secondary;
+        margin: 0;
+      }
+    }
+    
+    .download-actions {
+      @include flex-center;
+      gap: $spacing-md;
+      
+      @include mobile {
+        @include flex-column;
+      }
+      
+      .btn.large {
+        padding: $spacing-md $spacing-xl;
+        font-size: 1.1rem;
+        
+        .btn-icon {
+          margin-left: $spacing-sm;
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+  
+  .next-steps {
+    @include card;
+    margin-bottom: $spacing-2xl;
+    
+    h3 {
+      color: $primary-color;
+      margin-bottom: $spacing-lg;
+      text-align: center;
+    }
+    
+    .steps-list {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .step-item {
+      @include flex-center;
+      gap: $spacing-md;
+      padding: $spacing-md 0;
+      border-bottom: 1px solid rgba($text-light, 0.2);
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      .step-number {
+        width: 30px;
+        height: 30px;
+        background-color: $primary-color;
+        color: white;
+        border-radius: 50%;
+        @include flex-center;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+      
+      .step-text {
+        color: $text-primary;
+        flex: 1;
+      }
+    }
+  }
+  
+  .actions {
+    @include flex-between;
+    
+    @include mobile {
+      @include flex-column;
+      gap: $spacing-md;
+    }
+  }
+}
