@@ -9,7 +9,7 @@ const initialState = {
       fileSize: 0,
       fileType: '',
       fileDataUrl: null, // Store as data URL instead of File object
-      sessionId: null // Backend session ID
+      reportId: null // Backend report ID
     },
     ocr: {
       extractedFields: {},
@@ -72,8 +72,8 @@ export const pocFlowSlice = createSlice({
     
     // Upload Step
     setUploadFile: (state, action) => {
-      const { fileName, fileSize, fileType, fileDataUrl, sessionId } = action.payload
-      state.stepData.upload = { fileName, fileSize, fileType, fileDataUrl, sessionId }
+      const { fileName, fileSize, fileType, fileDataUrl, reportId } = action.payload
+      state.stepData.upload = { fileName, fileSize, fileType, fileDataUrl, reportId }
       state.canProceed = !!fileName
     },
     

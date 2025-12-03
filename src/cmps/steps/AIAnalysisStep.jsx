@@ -11,8 +11,8 @@ export function AIAnalysisStep() {
     const [status, setStatus] = useState('processing') // 'processing', 'success', 'error'
     
     useEffect(() => {
-        // Only start analysis if we have valid session data and OCR results
-        const hasValidSession = stepData.upload.sessionId && stepData.upload.fileName
+        // Only start analysis if we have valid report data and OCR results
+        const hasValidSession = stepData.upload.reportId && stepData.upload.fileName
         const hasOCRData = stepData.ocr.extractedFields && Object.keys(stepData.ocr.extractedFields).length > 0
         
         if (!analysisData.isProcessing && !analysisData.results && hasValidSession && hasOCRData && !analysisStarted.current) {
@@ -25,13 +25,13 @@ export function AIAnalysisStep() {
             // If no valid data, show error
             setStatus('error')
         }
-    }, [stepData.upload.sessionId, stepData.upload.fileName, stepData.ocr.extractedFields, analysisData.isProcessing, analysisData.results])
+    }, [stepData.upload.reportId, stepData.upload.fileName, stepData.ocr.extractedFields, analysisData.isProcessing, analysisData.results])
     
     const performAnalysis = async () => {
-        const sessionId = stepData.upload.sessionId
+        const reportId = stepData.upload.reportId
         
-        if (!sessionId) {
-            console.error('❌ No session ID found')
+        if (!reportId) {
+            console.error('❌ No report ID found')
             setStatus('error')
             return
         }
@@ -41,7 +41,7 @@ export function AIAnalysisStep() {
             dispatch(setAnalysisProcessing(true))
             
             // Call backend analysis immediately
-            const analysisResponse = await uploadService.analyzeDocument(sessionId)
+            const analysisResponse = await uploadService.analyzeDocument(reportId)
             
             // Extract results from backend response
             const results = analysisResponse.analysisResults

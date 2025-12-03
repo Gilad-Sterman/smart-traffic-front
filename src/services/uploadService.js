@@ -7,7 +7,7 @@ export const uploadService = {
     formData.append('document', file)
     
     try {
-      // Use httpService but need to handle FormData differently
+      // Use real routes with proper user handling
       const response = await fetch('http://localhost:5000/api/upload/document', {
         method: 'POST',
         body: formData,
@@ -26,9 +26,9 @@ export const uploadService = {
   },
 
   // Start analysis process
-  async analyzeDocument(sessionId) {
+  async analyzeDocument(reportId) {
     try {
-      return await httpService.post(`upload/analyze/${sessionId}`)
+      return await httpService.post(`upload/analyze/${reportId}`)
     } catch (error) {
       console.error('Analysis error:', error)
       throw error
@@ -36,9 +36,9 @@ export const uploadService = {
   },
 
   // Get analysis results
-  async getResults(sessionId) {
+  async getResults(reportId) {
     try {
-      return await httpService.get(`upload/results/${sessionId}`)
+      return await httpService.get(`upload/results/${reportId}`)
     } catch (error) {
       console.error('Get results error:', error)
       throw error

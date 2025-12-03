@@ -50,7 +50,7 @@ export function UploadStep() {
                 fileSize: file.size,
                 fileType: file.type,
                 fileDataUrl: e.target.result,
-                sessionId: null // No session yet
+                reportId: null // No report yet
             }))
         }
         reader.readAsDataURL(file)
@@ -75,10 +75,10 @@ export function UploadStep() {
             // Upload to backend and process OCR
             const uploadResponse = await uploadService.uploadDocument(selectedFile)
             
-            // Update with session ID
+            // Update with report ID
             const updatedUploadData = {
                 ...uploadData,
-                sessionId: uploadResponse.sessionId
+                reportId: uploadResponse.reportId
             }
             
             dispatch(setUploadFile(updatedUploadData))
