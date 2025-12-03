@@ -9,14 +9,14 @@ export function UploadStep() {
     const uploadData = stepData.upload
     const [isUploading, setIsUploading] = useState(false)
     const [selectedFile, setSelectedFile] = useState(null) // Store file locally, not in Redux
-    
+
     const handleFileSelect = (event) => {
         const file = event.target.files[0]
         if (file) {
             handleFile(file)
         }
     }
-    
+
     const handleFileDrop = (event) => {
         event.preventDefault()
         const file = event.dataTransfer.files[0]
@@ -24,25 +24,25 @@ export function UploadStep() {
             handleFile(file)
         }
     }
-    
+
     const handleFile = (file) => {
         // Validate file
         const validTypes = ['image/jpeg', 'image/png', 'application/pdf']
         const maxSize = 10 * 1024 * 1024 // 10MB
-        
+
         if (!validTypes.includes(file.type)) {
             alert('סוג קובץ לא נתמך. אנא בחר JPG, PNG או PDF')
             return
         }
-        
+
         if (file.size > maxSize) {
             alert('הקובץ גדול מדי. גודל מקסימלי: 10MB')
             return
         }
-        
+
         // Store file locally and file info in Redux
         setSelectedFile(file) // Store file in local state
-        
+
         const reader = new FileReader()
         reader.onload = (e) => {
             dispatch(setUploadFile({
@@ -55,59 +55,45 @@ export function UploadStep() {
         }
         reader.readAsDataURL(file)
     }
-    
+
     const handleDragOver = (event) => {
         event.preventDefault()
     }
-    
+
     const handleClearFile = () => {
         dispatch(clearUploadFile())
         setSelectedFile(null) // Clear local file state too
     }
-    
+
     const handleContinue = async () => {
-        if (!canProceed || !selectedFile || isUploading) {
-            return
-        }
-        
+        if (!selectedFile || isUploading) return
+
         try {
             setIsUploading(true)
-            // Upload to backend and process OCR
             const uploadResponse = await uploadService.uploadDocument(selectedFile)
-            
-            // Update with report ID
-            const updatedUploadData = {
-                ...uploadData,
-                reportId: uploadResponse.reportId
-            }
-            
+
+            const updatedUploadData = { ...uploadData, reportId: uploadResponse.reportId }
             dispatch(setUploadFile(updatedUploadData))
-            setSelectedFile(null) // Clear local file after upload
-            
-            // Store OCR results if available
+            setSelectedFile(null)
+
             if (uploadResponse.ocrResults) {
-                // Convert date format from DD/MM/YYYY to YYYY-MM-DD for HTML date input
                 const ocrResults = { ...uploadResponse.ocrResults }
+
+                // Map OCR fields to frontend-friendly names
                 if (ocrResults.extractedFields?.violationDate) {
-                    const dateStr = ocrResults.extractedFields.violationDate
-                    // Convert DD/MM/YYYY to YYYY-MM-DD
-                    const [day, month, year] = dateStr.split('/')
-                    if (day && month && year) {
-                        ocrResults.extractedFields.date = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-                    }
+                    const [day, month, year] = ocrResults.extractedFields.violationDate.split('/')
+                    ocrResults.extractedFields.date = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
                 }
-                
-                // Map violationTime to time for frontend
                 if (ocrResults.extractedFields?.violationTime) {
                     ocrResults.extractedFields.time = ocrResults.extractedFields.violationTime
                 }
-                
+
                 dispatch(setOCRResults(ocrResults))
             }
-            
-            // Proceed to next step
+
+            // Auto proceed to edit step regardless of missing fields
             dispatch(nextStep())
-            
+
         } catch (error) {
             console.error('❌ Upload failed:', error)
             alert('העלאת הקובץ נכשלה. אנא נסה שוב.')
@@ -115,18 +101,19 @@ export function UploadStep() {
             setIsUploading(false)
         }
     }
-    
+
+
     return (
         <div className="upload-step">
             <div className="step-header">
                 <h2>העלאת דוח תנועה</h2>
                 <p>העלה תמונה או PDF של דוח התנועה לניתוח אוטומטי</p>
             </div>
-            
+
             <div className="upload-content">
                 <div className="upload-area">
                     {!uploadData.fileName ? (
-                        <div 
+                        <div
                             className="drag-drop-zone"
                             onDrop={handleFileDrop}
                             onDragOver={handleDragOver}
@@ -136,7 +123,7 @@ export function UploadStep() {
                             <h3>גרור קובץ לכאן או לחץ לבחירה</h3>
                             <p>JPG, PNG או PDF עד 10MB</p>
                             <button className="btn btn-primary">בחר קובץ</button>
-                            
+
                             <input
                                 id="file-input"
                                 type="file"
@@ -156,7 +143,7 @@ export function UploadStep() {
                                     <p>גודל: {(uploadData.fileSize / 1024 / 1024).toFixed(2)} MB</p>
                                     <p>סוג: {uploadData.fileType}</p>
                                 </div>
-                                <button 
+                                <button
                                     className="btn btn-secondary btn-small"
                                     onClick={handleClearFile}
                                 >
@@ -166,7 +153,7 @@ export function UploadStep() {
                         </div>
                     )}
                 </div>
-                
+
                 <div className="upload-info">
                     <h4>מה אנחנו מחפשים בדוח?</h4>
                     <ul>
@@ -177,10 +164,10 @@ export function UploadStep() {
                     </ul>
                 </div>
             </div>
-            
+
             {canProceed && (
                 <div className="step-actions">
-                    <button 
+                    <button
                         className="btn btn-primary large"
                         onClick={handleContinue}
                         disabled={isUploading}

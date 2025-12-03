@@ -46,61 +46,59 @@ export const pocFlowSlice = createSlice({
         state.canProceed = false // Reset for next step validation
       }
     },
-    
+
     prevStep: (state) => {
       if (state.currentStep > 1) {
         state.currentStep -= 1
         state.canProceed = true // Can always go back
       }
     },
-    
+
     goToStep: (state, action) => {
       const targetStep = action.payload
       if (targetStep >= 1 && targetStep <= state.totalSteps) {
         state.currentStep = targetStep
       }
     },
-    
+
     resetFlow: (state) => {
       return { ...initialState }
     },
-    
+
     // Step Validation
     setCanProceed: (state, action) => {
       state.canProceed = action.payload
     },
-    
+
     // Upload Step
     setUploadFile: (state, action) => {
       const { fileName, fileSize, fileType, fileDataUrl, reportId } = action.payload
       state.stepData.upload = { fileName, fileSize, fileType, fileDataUrl, reportId }
       state.canProceed = !!fileName
     },
-    
+
     clearUploadFile: (state) => {
       state.stepData.upload = initialState.stepData.upload
       state.canProceed = false
     },
-    
+
     // OCR Step
     setOCRResults: (state, action) => {
       const { extractedFields, confidenceScores } = action.payload
       state.stepData.ocr.extractedFields = extractedFields
       state.stepData.ocr.confidenceScores = confidenceScores
-      
-      // Check if all required fields are filled
-      const requiredFields = ['reportNumber', 'date', 'violationType', 'fineAmount']
-      const hasAllRequired = requiredFields.every(
-        field => extractedFields[field]?.trim()
-      )
-      state.canProceed = hasAllRequired
+      state.stepData.ocr.isEdited = false
+
+      // Don't block step progression here; user will edit in OCR step
+      state.canProceed = true
     },
+
     
     updateOCRField: (state, action) => {
       const { fieldName, value } = action.payload
       state.stepData.ocr.extractedFields[fieldName] = value
       state.stepData.ocr.isEdited = true
-      
+
       // Check if all required fields are filled
       const requiredFields = ['reportNumber', 'date', 'violationType', 'fineAmount']
       const hasAllRequired = requiredFields.every(
@@ -108,29 +106,29 @@ export const pocFlowSlice = createSlice({
       )
       state.canProceed = hasAllRequired
     },
-    
+
     // Analysis Step
     setAnalysisProgress: (state, action) => {
       state.stepData.analysis.progress = action.payload
     },
-    
+
     setAnalysisProcessing: (state, action) => {
       state.stepData.analysis.isProcessing = action.payload
     },
-    
+
     setAnalysisResults: (state, action) => {
       state.stepData.analysis.results = action.payload
       state.stepData.analysis.isProcessing = false
       state.canProceed = true
     },
-    
+
     // Results Step
     setResultsData: (state, action) => {
       const { conclusion, recommendation, explanation } = action.payload
       state.stepData.results = { conclusion, recommendation, explanation }
       state.canProceed = true
     },
-    
+
     // PDF Step
     setPDFGenerated: (state, action) => {
       const { downloadUrl } = action.payload
@@ -140,12 +138,12 @@ export const pocFlowSlice = createSlice({
       }
       state.canProceed = true
     },
-    
+
     // Error Handling
     setError: (state, action) => {
       state.error = action.payload
     },
-    
+
     clearError: (state) => {
       state.error = null
     }
