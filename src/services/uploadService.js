@@ -1,5 +1,10 @@
 import { httpService } from './http.service.js'
 
+// Get the base URL for API calls
+const BASE_URL = process.env.NODE_ENV === 'production'
+    ? '/api/'
+    : 'http://localhost:5000/api/'
+
 export const uploadService = {
   // Upload document file
   async uploadDocument(file) {
@@ -7,8 +12,8 @@ export const uploadService = {
     formData.append('document', file)
     
     try {
-      // Use real routes with proper user handling
-      const response = await fetch('http://localhost:5000/api/upload/document', {
+      // Use environment-aware URL
+      const response = await fetch(`${BASE_URL}upload/document`, {
         method: 'POST',
         body: formData,
         credentials: 'include'
