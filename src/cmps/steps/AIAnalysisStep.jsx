@@ -40,8 +40,12 @@ export function AIAnalysisStep() {
             setStatus('processing')
             dispatch(setAnalysisProcessing(true))
             
-            // Call backend analysis immediately
-            const analysisResponse = await uploadService.analyzeDocument(reportId)
+            // Get user-corrected fields from OCR step
+            const correctedFields = stepData.ocr.extractedFields
+            
+            // Call backend analysis with corrected fields
+            console.log('📝 Sending corrected fields to AI analysis:', correctedFields)
+            const analysisResponse = await uploadService.analyzeDocument(reportId, correctedFields)
             
             // Extract results from backend response
             const results = analysisResponse.analysisResults

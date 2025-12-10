@@ -31,9 +31,10 @@ export const uploadService = {
   },
 
   // Start analysis process
-  async analyzeDocument(reportId) {
+  async analyzeDocument(reportId, correctedFields = null) {
     try {
-      return await httpService.post(`upload/analyze/${reportId}`)
+      const requestBody = correctedFields ? { correctedFields } : {}
+      return await httpService.post(`upload/analyze/${reportId}`, requestBody)
     } catch (error) {
       console.error('Analysis error:', error)
       throw error

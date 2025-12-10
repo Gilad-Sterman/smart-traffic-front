@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { updateOCRField, nextStep, prevStep, setCanProceed } from '../../store/slices/pocFlowSlice'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export function OCREditStep() {
     const dispatch = useDispatch()
     const { stepData, canProceed } = useSelector(state => state.pocFlow)
     const ocrData = stepData.ocr
+    const [imageZoomed, setImageZoomed] = useState(false)
     
     useEffect(() => {
         // Validate fields when component loads
@@ -59,8 +60,21 @@ export function OCREditStep() {
             <div className="ocr-content">
                 <div className="document-preview">
                     <h3>תצוגה מקדימה של הדוח</h3>
-                    <div className="preview-placeholder">
-                        <p>כאן תוצג תמונת הדוח</p>
+                    <div className="preview-container">
+                        {stepData.upload.fileDataUrl ? (
+                            <img 
+                                src={stepData.upload.fileDataUrl} 
+                                alt="תמונת דוח התנועה"
+                                className="document-image"
+                                onClick={() => setImageZoomed(true)}
+                                style={{ cursor: 'pointer' }}
+                                title="לחץ להגדלה"
+                            />
+                        ) : (
+                            <div className="preview-placeholder">
+                                <p>לא נמצאה תמונה</p>
+                            </div>
+                        )}
                     </div>
                 </div>
                 
@@ -151,6 +165,26 @@ export function OCREditStep() {
                     המשך לניתוח
                 </button>
             </div>
+            
+            {/* Image Zoom Modal */}
+            {imageZoomed && stepData.upload.fileDataUrl && (
+                <div className="image-zoom-modal" onClick={() => setImageZoomed(false)}>
+                    <div className="zoom-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button 
+                            className="close-zoom" 
+                            onClick={() => setImageZoomed(false)}
+                            title="סגור"
+                        >
+                            ✕
+                        </button>
+                        <img 
+                            src={stepData.upload.fileDataUrl} 
+                            alt="תמונת דוח התנועה - תצוגה מוגדלת"
+                            className="zoomed-image"
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
