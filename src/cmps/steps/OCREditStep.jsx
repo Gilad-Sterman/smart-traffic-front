@@ -11,6 +11,7 @@ export function OCREditStep() {
     useEffect(() => {
         // Validate fields when component loads
         if (ocrData.extractedFields && Object.keys(ocrData.extractedFields).length > 0) {
+            
             const requiredFields = ['reportNumber', 'date', 'violationType', 'fineAmount']
             const hasAllRequired = requiredFields.every(
                 field => ocrData.extractedFields[field]?.trim()
@@ -42,11 +43,15 @@ export function OCREditStep() {
         const percentage = Math.round(confidence * 100)
         
         if (confidence >= 0.9) {
-            return { class: 'high-confidence', text: `דיוק גבוה (${percentage}%)` }
+            return { class: 'very-high-confidence', text: `דיוק גבוה מאוד (${percentage}%)` }
         } else if (confidence >= 0.8) {
-            return { class: 'medium-confidence', text: `דיוק בינוני (${percentage}%)` }
+            return { class: 'high-confidence', text: `דיוק גבוה (${percentage}%)` }
+        } else if (confidence >= 0.65) {
+            return { class: 'medium-confidence', text: `בינוני (${percentage}%)` }
+        } else if (confidence >= 0.5) {
+            return { class: 'low-confidence', text: `נמוך (${percentage}%) - בדוק` }
         } else {
-            return { class: 'low-confidence', text: `דיוק נמוך (${percentage}%) - בדוק` }
+            return { class: 'very-low-confidence', text: `נמוך מאוד (${percentage}%) - בדוק בקפדנות` }
         }
     }
     
@@ -149,6 +154,37 @@ export function OCREditStep() {
                             onChange={(e) => handleFieldChange('time', e.target.value)}
                         />
                         <span className="confidence-indicator">{getConfidenceInfo('violationTime').text}</span>
+                    </div>
+                    
+                    <div className="field-group optional">
+                        <label>נקודות (אופציונלי)</label>
+                        <input 
+                            type="number" 
+                            placeholder="מספר נקודות" 
+                            className={`field-input ${getConfidenceInfo('points').class}`}
+                            value={ocrData.extractedFields?.points !== undefined ? ocrData.extractedFields.points : ''}
+                            onChange={(e) => handleFieldChange('points', e.target.value)}
+                            min="0"
+                            max="12"
+                        />
+                        <span className="confidence-indicator">{getConfidenceInfo('points').text}</span>
+                    </div>
+                    
+                    <div className="field-group optional">
+                        <label>מועד אחרון לערעור (אופציונלי)</label>
+                        <input 
+                            type="date" 
+                            className={`field-input ${getConfidenceInfo('appealDeadline').class}`}
+                            value={ocrData.extractedFields?.appealDeadline ? 
+                                ocrData.extractedFields.appealDeadline.split('/').reverse().join('-') : ''}
+                            onChange={(e) => {
+                                // Convert from YYYY-MM-DD to DD/MM/YYYY for backend compatibility
+                                const [year, month, day] = e.target.value.split('-')
+                                const formattedDate = `${day}/${month}/${year}`
+                                handleFieldChange('appealDeadline', formattedDate)
+                            }}
+                        />
+                        <span className="confidence-indicator">{getConfidenceInfo('appealDeadline').text}</span>
                     </div>
                 </div>
             </div>

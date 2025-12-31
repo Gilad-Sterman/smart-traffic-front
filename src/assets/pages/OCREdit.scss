@@ -94,6 +94,11 @@
         border-color: $primary-color;
       }
       
+      &.very-high-confidence {
+        border-color: #22c55e;
+        background-color: rgba(34, 197, 94, 0.05);
+      }
+      
       &.high-confidence {
         border-color: $success-color;
         background-color: rgba($success-color, 0.05);
@@ -105,6 +110,11 @@
       }
       
       &.low-confidence {
+        border-color: $warning-color;
+        background-color: rgba($warning-color, 0.05);
+      }
+      
+      &.very-low-confidence {
         border-color: $danger-color;
         background-color: rgba($danger-color, 0.05);
       }
@@ -116,6 +126,10 @@
       margin-top: $spacing-xs;
       font-weight: 500;
       
+      .very-high-confidence + & {
+        color: #22c55e;
+      }
+      
       .high-confidence + & {
         color: $success-color;
       }
@@ -125,6 +139,10 @@
       }
       
       .low-confidence + & {
+        color: $warning-color;
+      }
+      
+      .very-low-confidence + & {
         color: $danger-color;
       }
     }
